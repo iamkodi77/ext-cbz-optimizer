@@ -4,7 +4,6 @@
   "short_name": "PanelForge",
   "version": "1.0.0",
   "description": "Convert images, PDFs, ZIPs and CBZs into reader-ready CBZ files entirely in your browser. No uploads, no server, works offline.",
-  "default_locale": "en",
   "icons": {
     "16": "icons/icon16.png",
     "32": "icons/icon32.png",
