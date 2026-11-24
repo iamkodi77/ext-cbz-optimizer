@@ -1,0 +1,14 @@
+:root{--ink:#18201d;--muted:#6d7873;--cream:#f4f1e8;--paper:#fffef9;--green:#215c46;--line:#dcded7;--orange:#ef7f4d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'DM Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+.popup{width:340px;padding:18px}
+.popup-head{display:flex;justify-content:space-between;align-items:center}
+.brand{font:700 18px 'Space Grotesk',system-ui,sans-serif}
+.logo{display:inline-grid;place-items:center;width:30px;height:30px;background:var(--green);color:#fff;border-radius:9px;margin-right:8px;font-size:12px;transform:rotate(-4deg)}
+.offline{font-size:11px;color:var(--green);background:#dcebdc;padding:5px 10px;border-radius:99px}
+.tagline{color:var(--muted);font-size:13px;line-height:1.5;margin:14px 0}
+.open-btn{border:0;border-radius:11px;background:var(--green);color:#fff;width:100%;padding:13px;font:600 15px 'Space Grotesk',system-ui,sans-serif;cursor:pointer}
+.open-btn:hover{background:#174b38}
+.summary{margin-top:12px;font-size:12px;color:var(--muted);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;line-height:1.6}
+.last{margin-top:8px;font-size:12px;color:var(--green);background:#edf5ec;border-radius:10px;padding:10px 12px;line-height:1.5}
+.foot{font-size:11px;color:var(--muted);text-align:center;margin:14px 0 0}

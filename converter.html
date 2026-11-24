@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PanelForge — Manga to CBZ Converter</title>
+  <link rel="stylesheet" href="converter.css">
+</head>
+<body>
+<header>
+  <a class="brand" href="converter.html"><span>PF</span> PanelForge</a>
+  <div class="header-right">
+    <span class="version" id="version"></span>
+    <div class="offline">● 100% local</div>
+  </div>
+</header>
+<main>
+  <section class="hero">
+    <p class="eyebrow">PRIVATE · FAST · OFFLINE</p>
+    <h1>Turn your manga into<br><em>beautiful CBZ files.</em></h1>
+    <p>Combine images, PDFs, ZIPs, or existing CBZ files. Everything stays on your computer — no uploads, no server, no account.</p>
+  </section>
+
+  <form id="converter" novalidate>
+    <section class="card upload-card">
+      <label id="dropzone" class="dropzone">
+        <input id="files" type="file" multiple accept="image/*,.pdf,.zip,.cbz,.tif,.tiff,.bmp,.gif,.webp">
+        <span class="upload-icon">⇧</span>
+        <strong>Drop your pages here</strong>
+        <small>or click to browse · JPG, PNG, WEBP, BMP, GIF, TIFF, PDF, ZIP, CBZ</small>
+      </label>
+      <div id="file-list" class="file-list"></div>
+      <div id="file-toolbar" class="file-toolbar" hidden>
+        <span id="file-totals" class="file-totals"></span>
+        <span class="toolbar-actions">
+          <button type="button" id="add-more" class="mini-btn">+ Add more</button>
+          <button type="button" id="clear-files" class="mini-btn">Clear all</button>
+        </span>
+      </div>
+    </section>
+
+    <div class="layout">
+      <section class="card options">
+        <div class="section-title"><b>Conversion settings</b><span>Fine-tune your comic</span></div>
+        <div class="grid">
+          <label>Output name<input id="output-name" maxlength="120" placeholder="my-manga"></label>
+          <label>Image format
+            <select id="format">
+              <option value="jpeg">JPEG — smallest</option>
+              <option value="webp">WebP — efficient</option>
+              <option value="png">PNG — lossless</option>
+            </select>
+          </label>
+          <label>Comic layout
+            <select id="layout">
+              <option value="standard">Standard pages</option>
+              <option value="webtoon">Webtoon / vertical strip</option>
+            </select>
+          </label>
+          <label>Reading direction
+            <select id="direction">
+              <option value="rtl">Right to left (manga)</option>
+              <option value="ltr">Left to right</option>
+            </select>
+          </label>
+          <label>Image quality
+            <span class="range-row"><input id="quality" type="range" min="40" max="100" step="1"><output id="quality-out">88%</output></span>
+          </label>
+          <label>Device screen
+            <select id="device"><option value="0x0">Original size / custom</option></select>
+          </label>
+          <label>Screen width <small>(px, 0 = original)</small><input id="max-width" type="number" min="0" step="1"></label>
+          <label>Screen height <small>(px, 0 = original)</small><input id="max-height" type="number" min="0" step="1"></label>
+        </div>
+
+        <p id="webtoon-help" class="hint" hidden>Webtoon mode slices each long vertical image into screen-sized pages and pads the final page without stretching. A screen size is required.</p>
+
+        <label class="toggle"><input id="split-spreads" type="checkbox"><i></i><span><b>Split double-page spreads</b><small>Landscape pages become two correctly ordered pages</small></span></label>
+        <label class="ratio-row">Spread ratio <small>(width ÷ height)</small>
+          <span class="range-row"><input id="spread-ratio" type="range" min="1" max="2" step="0.05"><output id="spread-ratio-out">1.35</output></span>
+        </label>
+
+        <label class="toggle"><input id="natural-sort" type="checkbox"><i></i><span><b>Natural page ordering</b><small>Sorts 2 before 10 when files are added (you can still reorder manually)</small></span></label>
+
+        <details class="advanced">
+          <summary>Advanced</summary>
+          <div class="grid">
+            <label>PDF render scale
+              <select id="pdf-scale">
+                <option value="1">1× — smaller, faster</option>
+                <option value="1.5">1.5×</option>
+                <option value="2" selected>2× — original default</option>
+                <option value="3">3× — larger, slower</option>
+              </select>
+            </label>
+            <label>Page background <small>(alpha + padding)</small>
+              <select id="background">
+                <option value="white">White</option>
+                <option value="black">Black</option>
+              </select>
+            </label>
+            <label>ZIP compression level
+              <select id="compression-level">
+                <option value="0">0 — store only (fastest, largest)</option>
+                <option value="1">1 — fastest</option>
+                <option value="3">3</option>
+                <option value="6" selected>6 — original default</option>
+                <option value="9">9 — smallest, slowest</option>
+              </select>
+            </label>
+          </div>
+        </details>
+
+        <div class="settings-actions">
+          <button type="button" id="export-settings" class="mini-btn">Export settings</button>
+          <button type="button" id="import-settings" class="mini-btn">Import settings</button>
+          <button type="button" id="reset-settings" class="mini-btn danger">Reset</button>
+          <input id="import-file" type="file" accept="application/json,.json" hidden>
+        </div>
+      </section>
+
+      <section class="card metadata">
+        <div class="section-title"><b>Comic metadata</b><span>Optional ComicInfo.xml</span></div>
+        <label>Title<input id="title" placeholder="Chapter title"></label>
+        <div class="two">
+          <label>Series<input id="series" placeholder="Series name"></label>
+          <label>Number<input id="number" placeholder="01"></label>
+        </div>
+        <label>Writer<input id="writer" placeholder="Author"></label>
+        <label>Genre<input id="genre" placeholder="Action, fantasy"></label>
+        <label>Summary<textarea id="summary" rows="3" placeholder="A short description…"></textarea></label>
+      </section>
+    </div>
+
+    <button id="submit" class="convert" type="submit"><span>Build my CBZ</span><small>Files are processed only on this device</small></button>
+    <div class="progress-wrap" id="progress-wrap" hidden>
+      <progress id="progress" max="100" value="0"></progress>
+      <span id="progress-label"></span>
+    </div>
+    <div id="status" role="status" aria-live="polite"></div>
+
+    <section id="result" class="card result" hidden>
+      <div>
+        <b id="result-name"></b>
+        <small id="result-meta"></small>
+      </div>
+      <span class="result-actions">
+        <button type="button" id="download-again" class="mini-btn primary">Download again</button>
+        <button type="button" id="convert-another" class="mini-btn">Convert another</button>
+      </span>
+    </section>
+  </form>
+
+  <section class="card history">
+    <div class="section-title"><b>Recent conversions</b><span>Stored only on this device</span></div>
+    <div id="history-list" class="history-list"><p class="history-empty">No conversions yet.</p></div>
+    <button type="button" id="clear-history" class="mini-btn" hidden>Clear history</button>
+  </section>
+</main>
+<footer>PanelForge Local <span>·</span> Your pages never leave your computer.</footer>
+
+<script src="lib/jszip.min.js"></script>
+<script src="lib/pdf.min.js"></script>
+<script src="lib/utif.js"></script>
+<script src="js/core.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/converter.js"></script>
+</body>
+</html>
