@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "PanelForge — Manga CBZ Converter",
+  "short_name": "PanelForge",
+  "version": "1.0.0",
+  "description": "Convert images, PDFs, ZIPs and CBZs into reader-ready CBZ files entirely in your browser. No uploads, no server, works offline.",
+  "default_locale": "en",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "PanelForge — Manga CBZ Converter",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "converter.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["storage", "contextMenus"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "panelforge-cbz-converter@local",
+      "strict_min_version": "132.0"
+    }
+  }
+}
